@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <random>
 #define cout std::cout
 #define endl std::endl
 #define cin std::cin
@@ -20,10 +21,24 @@ class UI{
 public:
     UI() : choice(0){}
     void run();
-};
+}UIObj;
+
+class NumberGenerator{
+    std::random_device rd;
+    int num1;
+    int num2;
+    float fnum1;
+    float fnum2;
+public:
+    NumberGenerator(){} //If required in future , just in case declaration.
+    void getInt(int a=10); // Get 2 integer between 0 to a if a is provided else 0-10
+    void getFloat(int a=1); // Get a float between 0 to a if a is provided else 0-1
+    
+}NGObj;
 
 void UI::run(){
     display();
+//    cout<<NGObj.getInt()<<endl;
 }
 
 void UI::display(){
@@ -62,11 +77,20 @@ void UI::set(int select){
     choice=select;
 }
 
+void NumberGenerator::getInt(int a){
+    num1 = rd()%a;
+    num2 = rd()%a;
+}
+
+void NumberGenerator::getFloat(int a){
+    fnum1 = rd()%a;
+    fnum2 = rd()%a;
+}
 
 
 int main() {
-    UI a;
-    a.run();
+    
+    UIObj.run();
     
     return 0;
 }
