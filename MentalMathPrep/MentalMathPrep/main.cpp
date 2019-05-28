@@ -25,11 +25,16 @@ public:
 
 class NumberGenerator{
     std::random_device rd;
+    
+//    int num1;
+//    int num2;
+//    float fnum1;
+//    float fnum2;
+public:
     int num1;
     int num2;
     float fnum1;
     float fnum2;
-public:
     NumberGenerator(){} //If required in future , just in case declaration.
     void getInt(int a=10); // Get 2 integer between 0 to a if a is provided else 0-10
     void getFloat(int a=1); // Get a float between 0 to a if a is provided else 0-1
@@ -38,7 +43,6 @@ public:
 
 void UI::run(){
     display();
-//    cout<<NGObj.getInt()<<endl;
 }
 
 void UI::display(){
@@ -80,17 +84,28 @@ void UI::set(int select){
 void NumberGenerator::getInt(int a){
     num1 = rd()%a;
     num2 = rd()%a;
+    if (num1 == 0) {
+        num1=1;
+    }else if (num2 == 0){num2=1;}
 }
 
 void NumberGenerator::getFloat(int a){
-    fnum1 = rd()%a;
-    fnum2 = rd()%a;
+    fnum1 = rd()% (a*100);
+    fnum2 = rd()% (a*100);
+    fnum1 = fnum1/100;
+    fnum2 = fnum2/100;
 }
 
 
 int main() {
     
-    UIObj.run();
+//    UIObj.run();
+    NGObj.getFloat();
+    NGObj.getInt();
+    cout<<NGObj.fnum1<<endl
+    <<NGObj.fnum2<<endl
+    <<NGObj.num1<<endl
+    <<NGObj.num2<<endl;
     
     return 0;
 }
