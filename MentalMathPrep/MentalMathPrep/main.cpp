@@ -13,26 +13,28 @@
 #define cin std::cin
 
 
+
+//A class for handling UI.
 class UI{
     int choice;
     int option;//1 integer , 2 float
     
-    void setOption(int select);
+    void setOption(int select); // used to set option 1 for int and 2 for float.
     void set(int select);//We will pass the choice to set.
     void display();//will display the UI options
     void checkError(int n);//Responsible to check if proper value is selected.
     void chooseOption();//sets option value.
 public:
-    int getCurrentChoice(){return choice;}
-    int getCurrentOption(){return option;}
+    int getCurrentChoice(){return choice;} // used to get choice i.e. 1, 2 , 3 or exit.
+    int getCurrentOption(){return option;} // used to get option i.e. 1 for int and 2 for float.
     UI() : choice(0){}
-    void run();
+    void run(); //used to run
 }UIObj;
 
 
 
 
-
+//A class to generate random numbers in a given range.
 class NumberGenerator{
     std::random_device rd;
     
@@ -50,26 +52,27 @@ public:
 
 
 
+//Functions such as addition , subtraction and multiplication are defined in this class.
 class Functions{
     int ans;
     float ansf;
-    void addition();
-    void subtraction();
-    void multiplication();
+    void addition(); // if addition operation is defined call this
+    void subtraction(); // if subtraction operation is defined call this
+    void multiplication(); // if multiplication operation is defined call this.
 public:
-    void run(); // Uses UIObj.choice , to perform suitable operation.
-    int getAns();
-    float getAnsf();
+    void run(); // Uses UIObj.choice , to perform suitable operation. (add multiply or divide).
+    int getAns(); // Used to get integer answer.
+    float getAnsf(); // Used to get floating point answer.
 }FUNObj;
 
 
-
+// used to get users input and verify the input.
 class MentalMath{
     int t1;
     float t2;
 public:
     void takeInput();//Take input from the use , i.e Answer.
-    bool verifyInput();
+    bool verifyInput(); //Returns true if user response matches with the answer , otherwise returns false.
     
 }MMObj;
 
@@ -79,6 +82,7 @@ public:
 
 void UI::run(){
     display();
+    chooseOption();
 }
 
 void UI::display(){
@@ -90,7 +94,6 @@ void UI::display(){
     int n(-1);
     cin>>n;
     checkError(n);
-    chooseOption();
 }
 
 void UI::chooseOption(){
@@ -148,10 +151,12 @@ void Functions::addition(){
     switch (UIObj.getCurrentOption()) {
         case 1:
             //Integer
+            cout<<NGObj.getNum(1)<<" + "<<NGObj.getNum(2)<<endl;
             ans = NGObj.getNum(1) + NGObj.getNum(2);
             break;
         case 2:
             //Float
+            cout<<NGObj.getNumf(1)<<" + "<<NGObj.getNumf(2)<<endl;
             ansf = NGObj.getNumf(1) + NGObj.getNumf(2);
             break;
             
@@ -166,10 +171,12 @@ void Functions::subtraction(){
     switch (UIObj.getCurrentOption()) {
         case 1:
             //Integer
+            cout<<NGObj.getNum(1)<<" - "<<NGObj.getNum(2)<<endl;
             ans = NGObj.getNum(1) - NGObj.getNum(2);
             break;
         case 2:
             //Float
+            cout<<NGObj.getNumf(1)<<" - "<<NGObj.getNumf(2)<<endl;
             ansf = NGObj.getNumf(1) - NGObj.getNumf(2);
             break;
             
@@ -185,10 +192,12 @@ void Functions::multiplication(){
     switch (UIObj.getCurrentOption()) {
         case 1:
             //Integer
+            cout<<NGObj.getNum(1)<<" * "<<NGObj.getNum(2)<<endl;
             ans = NGObj.getNum(1) * NGObj.getNum(2);
             break;
         case 2:
             //Float
+            cout<<NGObj.getNumf(1)<<" * "<<NGObj.getNumf(2)<<endl;
             ansf = NGObj.getNumf(1) * NGObj.getNumf(2);
             break;
             
@@ -218,6 +227,14 @@ void Functions::run(){
     }
 }
 
+
+int Functions::getAns(){
+    return ans;
+}
+
+float Functions::getAnsf(){
+    return ansf;
+}
 
 
 
@@ -308,9 +325,15 @@ bool MentalMath::verifyInput(){
 
 int main() {
     
-    UIObj.run();
-//    NGObj.getFloat();
-//    NGObj.getInt();
+    UIObj.run(); // chose options and choice.
+    NGObj.setInt();
+    FUNObj.run();
+    MMObj.takeInput();
+    if (MMObj.verifyInput()) {
+        cout<<"Correct"<<endl;
+    }else{
+        cout<<"WRONG"<<endl;
+    }
     
     return 0;
 }
