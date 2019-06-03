@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <random>
+#include <ctime>
 #define cout std::cout
 #define endl std::endl
 #define cin std::cin
@@ -76,7 +77,47 @@ public:
     
 }MMObj;
 
+class Time{
+    int timesCalled;
+    time_t start,stop;
+    bool timeflag;
+    long int timeSum;
+    
+    //auxiliary
+    void startTimer(){
+        time(&start);
+    }
+    
+    //auxiliary function for timer to set a stop point
+    void stopTimer(){
+        time(&stop);
+    }
+    
+    double timerDifference(){
+        return difftime(stop, start);
+    }
 
+public:
+    Time(): start(NULL) , stop(NULL),timeflag(true),timesCalled(0),timeSum(0){}
+    
+    //Alternatively sets start and stop time when called.
+    void timer(){
+        if (timeflag) {
+            startTimer();
+            timeflag=false;
+        }else{
+            stopTimer();
+            timeflag=true;
+            timesCalled += 1;
+            timeSum += timerDifference();
+        }
+    }
+    
+    float average(){
+        return (float)timeSum/timesCalled;
+    }
+    
+}TIMEObj;
 
 //Method definations for UI
 
@@ -320,20 +361,31 @@ bool MentalMath::verifyInput(){
 }
 
 
-
+void completeRun(int n){
+    int score = 0;
+    UIObj.run(); // chose options and choice.
+    for (int i =0; i<n; i++) {
+        NGObj.setInt();
+        NGObj.setFloat();
+        FUNObj.run();
+        TIMEObj.timer();
+        MMObj.takeInput();
+        if (MMObj.verifyInput()) {
+            score += 1;
+            cout<<"Correct"<<endl;
+        }else{
+            cout<<"WRONG"<<endl;
+        }
+        TIMEObj.timer();
+    }
+    cout<<"Time taken on average : "<<TIMEObj.average()<<" Seconds per question"<<endl;
+    cout<<"Total Score : "<<score<<" / "<<n<<endl;
+}
 
 
 int main() {
     
-    UIObj.run(); // chose options and choice.
-    NGObj.setInt();
-    FUNObj.run();
-    MMObj.takeInput();
-    if (MMObj.verifyInput()) {
-        cout<<"Correct"<<endl;
-    }else{
-        cout<<"WRONG"<<endl;
-    }
+    completeRun(10);
     
     return 0;
 }
