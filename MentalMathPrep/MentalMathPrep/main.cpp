@@ -60,7 +60,10 @@ class Functions{
     void addition(); // if addition operation is defined call this
     void subtraction(); // if subtraction operation is defined call this
     void multiplication(); // if multiplication operation is defined call this.
+    std::random_device rd;
+    int a;
 public:
+    Functions() : a(0){}
     void run(); // Uses UIObj.choice , to perform suitable operation. (add multiply or divide).
     int getAns(); // Used to get integer answer.
     float getAnsf(); // Used to get floating point answer.
@@ -131,7 +134,8 @@ void UI::display(){
     <<"1. Addition"<<endl
     <<"2. Subtraction"<<endl
     <<"3. Multiplication"<<endl
-    <<"4. Exit"<<endl;
+    <<"4. Random"<<endl
+    <<"9. Exit"<<endl;
     int n(-1);
     cin>>n;
     checkError(n);
@@ -162,13 +166,15 @@ void UI::checkError(int n){
             set(3);
             break;
         case 4:
-            exit(0);
+            set(4);
         case 5:
             setOption(1);
             break;
         case 6:
             setOption(2);
             break;
+        case 9:
+            exit(0);
         default:
             cout<<"Invalid selection , please select again."<<endl;
             display();
@@ -260,6 +266,23 @@ void Functions::run(){
             break;
         case 3:
             multiplication();
+            break;
+        case 4:
+            a = rd()%3;
+            switch (a) {
+                case 0:
+                    addition();
+                    break;
+                case 1:
+                    subtraction();
+                    break;
+                case 2:
+                    multiplication();
+                    break;
+                default:
+                    cout<<"Functions : Invalid random number generated"<<endl;
+                    break;
+            }
             break;
             
         default:
@@ -385,7 +408,7 @@ void completeRun(int n){
 
 int main() {
     
-    completeRun(10);
+    completeRun(100);
     
     return 0;
 }
