@@ -19,16 +19,19 @@
 class UI{
     int choice;
     int option;//1 integer , 2 float
+    int range;
     
     void setOption(int select); // used to set option 1 for int and 2 for float.
     void set(int select);//We will pass the choice to set.
     void display();//will display the UI options
     void checkError(int n);//Responsible to check if proper value is selected.
     void chooseOption();//sets option value.
+    void chooseRange();//Gets range for number generator obj.
 public:
+    int getCurrentRange(){return range;}//Returns range.
     int getCurrentChoice(){return choice;} // used to get choice i.e. 1, 2 , 3 or exit.
     int getCurrentOption(){return option;} // used to get option i.e. 1 for int and 2 for float.
-    UI() : choice(0){}
+    UI() : choice(0) , range(10){}
     void run(); //used to run
 }UIObj;
 
@@ -127,6 +130,7 @@ public:
 void UI::run(){
     display();
     chooseOption();
+    chooseRange();
 }
 
 void UI::display(){
@@ -151,6 +155,11 @@ void UI::chooseOption(){
         n = 5;
     }else if (n == 2){n=6;}else{n = -1;}
     checkError(n);
+}
+
+void UI::chooseRange(){
+    cout<<"Enter max number which you want to include"<<endl;
+    cin>>range;
 }
 
 
@@ -388,8 +397,8 @@ void completeRun(int n){
     int score = 0;
     UIObj.run(); // chose options and choice.
     for (int i =0; i<n; i++) {
-        NGObj.setInt();
-        NGObj.setFloat();
+        NGObj.setInt(UIObj.getCurrentRange());
+        NGObj.setFloat(UIObj.getCurrentRange());
         FUNObj.run();
         TIMEObj.timer();
         MMObj.takeInput();
